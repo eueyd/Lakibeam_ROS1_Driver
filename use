@@ -1,0 +1,74 @@
+我来帮你在ROS容器中配置这些项目，按照以下步骤操作：
+
+1. 首先创建并进入工作空间：
+```bash
+cd /root
+mkdir -p ros_ws/src
+cd ros_ws/src
+```
+
+2. 克隆这三个仓库：
+```bash
+git clone https://github.com/eueyd/rm2022_auto_infantry_ws.git
+git clone https://github.com/eueyd/Lakibeam_ROS1_Driver.git
+git clone https://github.com/eueyd/wit_ros_imu.git
+```
+
+3. 安装必要的依赖：
+```bash
+apt-get update
+apt-get install -y \
+    ros-noetic-tf \
+    ros-noetic-rviz \
+    ros-noetic-rostopic \
+    ros-noetic-serial \
+    python3-pip \
+    cmake \
+    build-essential
+```
+
+4. 返回工作空间根目录编译：
+```bash
+cd /root/ros_ws
+source /opt/ros/noetic/setup.bash
+catkin_make
+```
+
+5. 设置环境变量：
+```bash
+echo "source /root/ros_ws/devel/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+```
+
+6. 配置串口权限（假设使用 USB 串口设备）：
+```bash
+apt-get install -y dialout
+usermod -aG dialout root
+```
+
+7. 为了方便后续开发，建议安装一些工具：
+```bash
+apt-get install -y \
+    vim \
+    git \
+    net-tools \
+    iputils-ping
+```
+
+启动和测试：
+- 雷达驱动启动：
+```bash
+roslaunch lakibeam_ros driver.launch
+```
+
+- IMU驱动启动：
+```bash
+roslaunch wit_ros_imu wit_ros_imu.launch
+```
+
+注意事项：
+1. 需要确认设备的串口号（通常是 /dev/ttyUSB0 或 /dev/ttyACM0）
+2. 可能需要修改 launch 文件中的串口配置
+3. 第一次运行前建议检查各个设备的波特率设置
+
+需要我详细解释某个步骤吗？
